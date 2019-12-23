@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="name.guolanren.dao.RememberMeTokenMapper">
+
+    <sql id="table">
+        remember_me_token
+    </sql>
+
+    <sql id="select_columns">
+        username, series, token, last_used
+    </sql>
+
+    <resultMap id="RememberMeTokenMap" type="PersistentRememberMeToken">
+        <id column="series" jdbcType="VARCHAR" property="series"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="token" jdbcType="VARCHAR" property="tokenValue"/>
+        <result column="last_used" jdbcType="DATE" property="date"/>
+    </resultMap>
+
+    <insert id="insert">
+        INSERT INTO <include refid="table"/> (username, series, token, last_used)
+        VALUES (#{username}, #{series}, #{tokenValue}, #{date})
+    </insert>
+
+    <delete id="deleteByUsername">
+        DELETE FROM <include refid="table"/>
+        WHERE username = #{username}
+    </delete>
+
+    <update id="update">
+        UPDATE <include refid="table"/>
+        <set>
+            <if test="username != null and username != ''">
+                name = #{username},
+            </if>
+            <if test="tokenValue != null">
+                token = #{tokenValue},
+            </if>
+            <if test="date != null">
+                last_used = #{date},
+            </if>
+        </set>
+        WHERE series = #{series}
+    </update>
+
+    <select id="getBySeries" parameterType="string" resultMap="RememberMeTokenMap">
+        SELECT <include refid="select_columns"/>
+        FROM <include refid="table"/>
+        <where>
+            <if test="series != null">
+                AND series = #{series}
+            </if>
+        </where>
+    </select>
+</mapper>
