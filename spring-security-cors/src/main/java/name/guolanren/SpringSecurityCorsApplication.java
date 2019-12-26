@@ -7,10 +7,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author guolanren
  */
 @SpringBootApplication
-public class SpringSecurityLogoutApplication {
+public class SpringSecurityCorsApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SpringSecurityLogoutApplication.class, args);
+        SpringApplication.run(SpringSecurityCorsApplication.class, args);
     }
 
 }
