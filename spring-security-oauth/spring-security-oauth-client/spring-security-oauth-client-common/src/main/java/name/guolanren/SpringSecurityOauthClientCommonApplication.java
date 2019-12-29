@@ -7,10 +7,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author guolanren
  */
 @SpringBootApplication
-public class SpringSecurityOauthClientApplication {
+public class SpringSecurityOauthClientCommonApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SpringSecurityOauthClientApplication.class, args);
+        SpringApplication.run(SpringSecurityOauthClientCommonApplication.class, args);
     }
 
 }
