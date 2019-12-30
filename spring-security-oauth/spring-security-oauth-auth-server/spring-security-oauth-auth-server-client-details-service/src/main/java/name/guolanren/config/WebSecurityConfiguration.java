@@ -16,6 +16,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
+                .antMatchers("/oauth/check_token").permitAll()
                 .anyRequest().authenticated()
                 .and()
             .formLogin()

@@ -24,7 +24,7 @@ public class ClientDetailsServiceConfiguration {
                 .authorizedGrantTypes("authorization_code", "implicit")
                 .accessTokenValiditySeconds(60 * 60 * 12)
                 .redirectUris("http://localhost:8080/login/oauth2/code/auth")
-                .resourceIds("user-info")
+                .resourceIds("user-info", "resource-id")
                 .authorities("ROLE_CLIENT")
                 .scopes("profile", "email", "phone")
                 .autoApprove("profile")
@@ -37,7 +37,13 @@ public class ClientDetailsServiceConfiguration {
                 .redirectUris("http://localhost:8080/login/oauth2/code/auth")
                 .resourceIds("user-info")
                 .scopes("profile", "email", "phone")
-                .autoApprove("true");
+                .autoApprove("true")
+                .and()
+            .withClient("resource")
+                .secret("resource")
+                .authorizedGrantTypes("client_credentials")
+                .authorities("ROLE_RESOURCE")
+                .accessTokenValiditySeconds(60 * 60 * 12);
 
         return builder.build();
     }
