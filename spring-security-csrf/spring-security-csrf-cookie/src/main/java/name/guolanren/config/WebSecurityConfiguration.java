@@ -19,7 +19,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
             .formLogin()
                 .and()
-            .csrf()
+            .csrf() // 请求头 X-XSRF-TOKEN
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
     }
 

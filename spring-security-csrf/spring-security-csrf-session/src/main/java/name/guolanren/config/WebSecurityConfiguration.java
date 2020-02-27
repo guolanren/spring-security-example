@@ -17,7 +17,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
                 .anyRequest().authenticated()
                 .and()
-            .formLogin();
+            .formLogin()
+                .and()
+            .csrf(); // 请求头 X-CSRF-TOKEN
     }
 
 }
