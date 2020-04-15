@@ -3,6 +3,8 @@ package name.guolanren.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -21,21 +23,26 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     @Qualifier("inMemoryClientDetailsService")
     private ClientDetailsService clientDetailsService;
 
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
         security.checkTokenAccess("hasAuthority('ROLE_RESOURCE')");
+    }
+
+    @Override
+    public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+        clients.withClientDetails(clientDetailsService);
     }
 
     /**
      * password 授权模式需要在 configure(AuthorizationServerEndpointsConfigurer endpoints) 中指定 AuthenticationManager
      */
     @Override
-    public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.withClientDetails(clientDetailsService);
-    }
-
-    @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        super.configure(endpoints);
+        endpoints
+                // 支持 password 授权模式
+                .authenticationManager(authenticationManager);
     }
 }

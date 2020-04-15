@@ -34,18 +34,16 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
         security.tokenKeyAccess("hasAuthority('ROLE_RESOURCE')");
     }
 
-    /**
-     * password 授权模式需要在 configure(AuthorizationServerEndpointsConfigurer endpoints) 中指定 AuthenticationManager
-     */
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.withClientDetails(clientDetailsService);
     }
 
+    /**
+     * password 授权模式需要在 configure(AuthorizationServerEndpointsConfigurer endpoints) 中指定 AuthenticationManager
+     */
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        super.configure(endpoints);
-
         endpoints
             .tokenStore(tokenStore)
             .tokenEnhancer(tokenEnhancer);

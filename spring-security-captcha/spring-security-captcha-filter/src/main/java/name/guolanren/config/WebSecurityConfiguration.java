@@ -1,6 +1,6 @@
 package name.guolanren.config;
 
-import name.guolanren.filter.VerificationCodeFilter;
+import name.guolanren.login.VerificationCodeFilter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;

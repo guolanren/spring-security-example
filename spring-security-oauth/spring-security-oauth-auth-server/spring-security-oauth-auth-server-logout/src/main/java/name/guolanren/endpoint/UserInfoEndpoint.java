@@ -1,6 +1,5 @@
 package name.guolanren.endpoint;
 
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,7 +14,6 @@ import java.util.Set;
 public class UserInfoEndpoint {
 
     @GetMapping("/me")
-    @PreAuthorize("#oauth2.hasScope('profile')")
     public Principal me(Principal principal) {
         Set<String> scopes = ((OAuth2Authentication) principal).getOAuth2Request().getScope();
         return principal;
