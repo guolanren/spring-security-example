@@ -7,6 +7,7 @@ import name.guolanren.login.sms.SmsAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -17,6 +18,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import java.util.Collections;
+import java.util.List;
+
 /**
  * @author guolanren
  */
@@ -25,7 +29,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    List<AuthenticationProvider> authenticationProviders = Collections.emptyList();
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -54,7 +58,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected AuthenticationManager authenticationManager() throws Exception {
         ProviderManager providerManager = (ProviderManager) super.authenticationManager();
-        providerManager.getProviders().add(new SmsAuthenticationProvider(userDetailsService));
+        providerManager.getProviders().addAll(authenticationProviders);
         return providerManager;
     }
 
